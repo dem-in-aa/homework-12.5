@@ -10,6 +10,8 @@ ROUND((SUM(INDEX_LENGTH) / (SELECT SUM(DATA_LENGTH)
 FROM INFORMATION_SCHEMA.TABLES)*100), 2) AS '% индексов в БД'  
 FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'sakila';
 ```
+![](img/1.png)
+
 
 ### Задание 2
 
@@ -25,9 +27,16 @@ where date(p.payment_date) = '2005-07-30' and p.payment_date = r.rental_date and
 <ins>Ответ</ins>:
 
 Выполнение запроса осуществляет вывод фамилии, имени и размера платежа за определенную дату. 
+
+![](img/2-0-1.png)
+
 При выполнении анализа запроса видно, что прогнозируемое время его исполнения при полном сканировании  составит 6584 милисекунд.
 
+![](img/2-1.png)
+
 После удаления из запроса полей f.title, film.f ориентировочное время выполнения составит 15,8 милисикунд.
+
+![](img/2-2.png)
 
 Был создан индекс:
 ```sql
