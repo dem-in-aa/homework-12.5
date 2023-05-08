@@ -4,6 +4,12 @@
 ### Задание 1
 
 Напишите запрос к учебной базе данных, который вернёт процентное отношение общего размера всех индексов к общему размеру всех таблиц.
+```sql
+SELECT       
+ROUND((SUM(INDEX_LENGTH) / (SELECT SUM(DATA_LENGTH)
+FROM INFORMATION_SCHEMA.TABLES)*100), 2) AS '% индексов в БД'  
+FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'sakila';
+```
 
 ### Задание 2
 
