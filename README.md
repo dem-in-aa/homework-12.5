@@ -33,7 +33,7 @@ where date(p.payment_date) = '2005-07-30' and p.payment_date = r.rental_date and
 ```sql
 CREATE INDEX payment_p ON payment (payment_id, payment_date);
 ```
-Создание индекса на скорость обработки запроса не повлияло, поэтому после анализа времени запроса индекс из таблицы удален.
+После создания индекса существенного снижения времени обработки запроса не выявлено, поэтому индекс из таблицы удален.
 ```sql
 DROP INDEX payment_p ON payment;
 ```
