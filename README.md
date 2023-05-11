@@ -42,7 +42,7 @@ where date(p.payment_date) = '2005-07-30' and p.payment_date = r.rental_date and
 
 Был создан индекс:
 ```sql
-CREATE INDEX payment_p ON payment (payment_id, payment_date);
+CREATE INDEX payment_p ON payment (payment_date);
 ```
 ![](img/2-1-1.png)
 
