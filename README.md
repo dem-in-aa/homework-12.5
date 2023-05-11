@@ -34,14 +34,18 @@ where date(p.payment_date) = '2005-07-30' and p.payment_date = r.rental_date and
 
 ![](img/2-1.png)
 
-После удаления из запроса полей f.title, film.f ориентировочное время выполнения составит 15,8 милисикунд.
+После удаления из запроса полей f.title, film.f ориентировочное время выполнения составило 15,5 милисекунд.
 
-![](img/2-2.png)
+Сам вывод запроса изменен:
+
+![](img/2-0-2.png)
 
 Был создан индекс:
 ```sql
 CREATE INDEX payment_p ON payment (payment_id, payment_date);
 ```
+![](img/2-1-1.png)
+
 Cодержимое запроса приведено к следующему:
 ```sql
 select distinct concat(c.last_name, ' ', c.first_name) as name, sum(p.amount)  over (partition by c.customer_id) as payment_sum
@@ -49,3 +53,7 @@ from payment p, rental r, customer c
 where p.payment_date >= '2005-07-30 00:00:00' and p.payment_date < DATE_ADD('2005-07-30 00:00:00', INTERVAL 1 DAY)
 and p.payment_date = r.rental_date and r.customer_id = c.customer_id;
 ```
+EXPLAIN analyze выполнения запроса:
+
+![](img/2-2.png)
+
