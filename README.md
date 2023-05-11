@@ -42,13 +42,10 @@ where date(p.payment_date) = '2005-07-30' and p.payment_date = r.rental_date and
 ```sql
 CREATE INDEX payment_p ON payment (payment_id, payment_date);
 ```
-После создания индекса существенного снижения времени обработки запроса не выявлено, поэтому индекс из таблицы удален.
-```sql
-DROP INDEX payment_p ON payment;
-```
-В итоге содержимое запроса приведено к следующему:
+Cодержимое запроса приведено к следующему:
 ```sql
 select distinct concat(c.last_name, ' ', c.first_name) as name, sum(p.amount)  over (partition by c.customer_id) as payment_sum
-from payment p, rental r, customer c, inventory i 
-where date(p.payment_date) = '2005-07-30' and p.payment_date = r.rental_date and r.customer_id = c.customer_id and i.inventory_id = r.inventory_id;
+from payment p, rental r, customer c
+where p.payment_date >= '2005-07-30 00:00:00' and p.payment_date < DATE_ADD('2005-07-30 00:00:00', INTERVAL 1 DAY)
+and p.payment_date = r.rental_date and r.customer_id = c.customer_id;
 ```
